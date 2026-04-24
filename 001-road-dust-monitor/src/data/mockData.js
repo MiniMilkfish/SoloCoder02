@@ -1,4 +1,4 @@
-import { CONFIG } from '../constants'
+import { CONFIG, DISTRICTS } from '@/constants'
 
 const getStatusFromDust = (dust) => {
   if (dust < CONFIG.DUST_THRESHOLDS.EXCELLENT) return CONFIG.STATUS.EXCELLENT
@@ -7,359 +7,104 @@ const getStatusFromDust = (dust) => {
   return CONFIG.STATUS.OFFLINE
 }
 
-const generateDeviceList = () => {
-  const baseDevices = [
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 890,
-      projectName: '潘水路/崇化路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '潘水路南侧(崇化路东30米)',
-      devicePoleId: 745,
-      devicePoleName: '潘水路040',
-      mnCode: 'LXHB0HZ0037224',
-      longitude: 120.265373,
-      latitude: 30.155742,
-      cameraStatus: 1,
-      dust: 53.2,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 873,
-      projectName: '萧然西路/体育路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '萧然西路东侧(体育路北50米)',
-      devicePoleId: 729,
-      devicePoleName: '萧然西路139',
-      mnCode: 'LXHB0HZ0037208',
-      longitude: 120.269825,
-      latitude: 30.168535,
-      cameraStatus: 1,
-      dust: 0.16,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 874,
-      projectName: '博学路/金鸡路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '博学路南侧(金鸡路东100米)',
-      devicePoleId: 730,
-      devicePoleName: '无',
-      mnCode: 'LXHB0HZ0037209',
-      longitude: 120.261404,
-      latitude: 30.19461,
-      cameraStatus: 1,
-      dust: 0.089,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 877,
-      projectName: '市心南路/南四路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '市心南路西侧(南四路南100米)',
-      devicePoleId: 732,
-      devicePoleName: '无',
-      mnCode: 'LXHB0HZ0037211',
-      longitude: 120.274722,
-      latitude: 30.132159,
-      cameraStatus: 1,
-      dust: 0.134,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 878,
-      projectName: '建设二路/市心北路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '建设二路南侧(市心北路东80米)',
-      devicePoleId: 733,
-      devicePoleName: '无',
-      mnCode: 'LXHB0HZ0037212',
-      longitude: 120.27536,
-      latitude: 30.205355,
-      cameraStatus: 1,
-      dust: 0.092,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 882,
-      projectName: '金鸡路/建设四路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '金鸡路西侧(建设四路北200米)',
-      devicePoleId: 737,
-      devicePoleName: '金鸡路098',
-      mnCode: 'LXHB0HZ0037216',
-      longitude: 120.260407,
-      latitude: 30.218599,
-      cameraStatus: 1,
-      dust: 0.094,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 885,
-      projectName: '风情大道/晨晖路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '风情大道(辅)西侧(晨晖路北100米)',
-      devicePoleId: 740,
-      devicePoleName: '风情大道198',
-      mnCode: 'LXHB0HZ0037219',
-      longitude: 120.251872,
-      latitude: 30.145352,
-      cameraStatus: 1,
-      dust: 0.181,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 886,
-      projectName: '工人路/萧棉路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '工人路西侧(萧棉路南200米)',
-      devicePoleId: 741,
-      devicePoleName: '工人路022',
-      mnCode: 'LXHB0HZ0037220',
-      longitude: 120.269031,
-      latitude: 30.175821,
-      cameraStatus: 1,
-      dust: 0.122,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 887,
-      projectName: '弘慧路/通城高架路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '弘慧路南侧(通城高架路东20米)',
-      devicePoleId: 742,
-      devicePoleName: '无',
-      mnCode: 'LXHB0HZ0037221',
-      longitude: 120.297913,
-      latitude: 30.262109,
-      cameraStatus: 1,
-      dust: 0.499,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 889,
-      projectName: '市心中路/山阴路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '市心中路东侧(山阴路北105米)',
-      devicePoleId: 744,
-      devicePoleName: '市心中路069',
-      mnCode: 'LXHB0HZ0037223',
-      longitude: 120.27371,
-      latitude: 30.183607,
-      cameraStatus: 1,
-      dust: 0.162,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 892,
-      projectName: '市心北路/北塘路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '市心北路西侧(北塘路北50米)',
-      devicePoleId: 747,
-      devicePoleName: '市心中路152',
-      mnCode: 'LXHB0HZ0037226',
-      longitude: 120.272504,
-      latitude: 30.198279,
-      cameraStatus: 1,
-      dust: 0.174,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 894,
-      projectName: '利华路/通惠北路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '利华路北侧(通惠北路西50米)',
-      devicePoleId: 749,
-      devicePoleName: '无',
-      mnCode: 'LXHB0HZ0037228',
-      longitude: 120.294983,
-      latitude: 30.221711,
-      cameraStatus: 1,
-      dust: 0.069,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 896,
-      projectName: '通惠北路/鸿宁路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '通惠北路西侧(鸿宁路南20米)',
-      devicePoleId: 751,
-      devicePoleName: '通惠北路378',
-      mnCode: 'LXHB0HZ0037230',
-      longitude: 120.298091,
-      latitude: 30.241281,
-      cameraStatus: 1,
-      dust: 0.101,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 7,
-      districtName: '萧山区',
-      projectId: 898,
-      projectName: '黎端路/通虹路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '黎端路西侧(通虹路北50米)',
-      devicePoleId: 753,
-      devicePoleName: '无',
-      mnCode: 'LXHB0HZ0037232',
-      longitude: 120.308759,
-      latitude: 30.18313,
-      cameraStatus: 1,
-      dust: 0.072,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 3,
-      districtName: '西湖区',
-      projectId: 1001,
-      projectName: '文三路/古翠路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '文三路北侧(古翠路东80米)',
-      devicePoleId: 1001,
-      devicePoleName: '文三路089',
-      mnCode: 'LXHB0HZ0037301',
-      longitude: 120.112345,
-      latitude: 30.278901,
-      cameraStatus: 1,
-      dust: 0.156,
-      pm25: 0.042,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 3,
-      districtName: '西湖区',
-      projectId: 1002,
-      projectName: '天目山路/万塘路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '天目山路南侧(万塘路西50米)',
-      devicePoleId: 1002,
-      devicePoleName: '天目山路123',
-      mnCode: 'LXHB0HZ0037302',
-      longitude: 120.134567,
-      latitude: 30.267890,
-      cameraStatus: 1,
-      dust: 0.234,
-      pm25: 0.056,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 4,
-      districtName: '江干区',
-      projectId: 1003,
-      projectName: '庆春东路/新塘路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '庆春东路北侧(新塘路东100米)',
-      devicePoleId: 1003,
-      devicePoleName: '庆春东路045',
-      mnCode: 'LXHB0HZ0037303',
-      longitude: 120.201234,
-      latitude: 30.256789,
-      cameraStatus: 1,
-      dust: 0.089,
-      pm25: 0.034,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 5,
-      districtName: '拱墅区',
-      projectId: 1004,
-      projectName: '莫干山路/登云路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '莫干山路西侧(登云路南80米)',
-      devicePoleId: 1004,
-      devicePoleName: '莫干山路234',
-      mnCode: 'LXHB0HZ0037304',
-      longitude: 120.145678,
-      latitude: 30.312345,
-      cameraStatus: 1,
-      dust: 1.2,
-      pm25: 0.0,
-      dataTime: '2021-06-21 17:18:00',
-    },
-    {
-      districtId: 6,
-      districtName: '滨江区',
-      projectId: 1005,
-      projectName: '江南大道/江虹路',
-      operationCompanyName: '上海龙象环保科技股份有限公司',
-      projectTypeName: '道路',
-      projectAddress: '江南大道南侧(江虹路东60米)',
-      devicePoleId: 1005,
-      devicePoleName: '江南大道078',
-      mnCode: 'LXHB0HZ0037305',
-      longitude: 120.213456,
-      latitude: 30.201234,
-      cameraStatus: 1,
-      dust: 0.112,
-      pm25: 0.028,
-      dataTime: '2021-06-21 17:18:00',
-    },
-  ]
-
-  return baseDevices.map(device => ({
-    ...device,
-    status: getStatusFromDust(device.dust),
-  }))
+const HANGZHOU_BOUNDS = {
+  minLng: 119.9,
+  maxLng: 120.6,
+  minLat: 30.0,
+  maxLat: 30.5,
 }
 
-export const mockDeviceList = generateDeviceList()
+const ROAD_NAMES = [
+  '文三路', '天目山路', '庆春东路', '莫干山路', '江南大道',
+  '市心南路', '建设二路', '工人路', '通惠北路', '鸿宁路',
+  '潘水路', '萧然西路', '博学路', '金鸡路', '建设四路',
+  '风情大道', '弘慧路', '市心中路', '北塘路', '利华路',
+  '曙光路', '解放路', '延安路', '武林路', '凤起路',
+  '体育场路', '环城北路', '中河中路', '西湖大道', '之江路',
+  '钱江路', '新业路', '婺江路', '望江路', '海潮路',
+  '近江路', '清江路', '秋涛路', '新塘路', '景昙路',
+  '庆春东路', '凤起东路', '艮山西路', '机场路', '天城路',
+  '文一路', '文二路', '文三路', '文四路', '学院路',
+  '古翠路', '万塘路', '教工路', '莫干山路', '湖墅南路',
+  '德胜路', '香积寺路', '大关路', '沈半路', '石祥路',
+  '留祥路', '古墩路', '紫荆花路', '蒋村路', '紫金港路',
+]
+
+const CROSS_ROAD_NAMES = [
+  '古翠路', '万塘路', '教工路', '学院路', '紫荆花路',
+  '新塘路', '秋涛路', '清江路', '婺江路', '钱江路',
+  '通惠北路', '市心北路', '市心南路', '工人路', '金鸡路',
+  '环城西路', '中河路', '建国路', '凯旋路', '秋涛北路',
+]
+
+const generateProjectName = () => {
+  const road1 = ROAD_NAMES[Math.floor(Math.random() * ROAD_NAMES.length)]
+  const road2 = CROSS_ROAD_NAMES[Math.floor(Math.random() * CROSS_ROAD_NAMES.length)]
+  return `${road1}/${road2}`
+}
+
+const generateMnCode = (index) => {
+  const num = String(index).padStart(6, '0')
+  return `LXHB0HZ${num}`
+}
+
+const generateRandomDustValue = () => {
+  const rand = Math.random()
+  if (rand < 0.6) return Math.random() * 0.25 + 0.05
+  if (rand < 0.85) return Math.random() * 0.4 + 0.3
+  if (rand < 0.95) return Math.random() * 1.0 + 0.8
+  return Math.random() * 3.0 + 2.0
+}
+
+const generateDeviceList = (count = 1500) => {
+  const devices = []
+  
+  const baseLng = CONFIG.HANGZHOU_COORDINATE.lng
+  const baseLat = CONFIG.HANGZHOU_COORDINATE.lat
+  const lngRange = HANGZHOU_BOUNDS.maxLng - HANGZHOU_BOUNDS.minLng
+  const latRange = HANGZHOU_BOUNDS.maxLat - HANGZHOU_BOUNDS.minLat
+  
+  for (let i = 0; i < count; i++) {
+    const offsetX = (Math.random() - 0.5) * lngRange
+    const offsetY = (Math.random() - 0.5) * latRange
+    
+    const lng = baseLng + offsetX
+    const lat = baseLat + offsetY
+    
+    const district = DISTRICTS[Math.floor(Math.random() * DISTRICTS.length)]
+    const dust = generateRandomDustValue()
+    const status = getStatusFromDust(dust)
+    
+    const hour = Math.floor(Math.random() * 24).toString().padStart(2, '0')
+    const minute = Math.floor(Math.random() * 60).toString().padStart(2, '0')
+    const second = Math.floor(Math.random() * 60).toString().padStart(2, '0')
+    
+    devices.push({
+      districtId: district.id,
+      districtName: district.name,
+      projectId: 1000 + i,
+      projectName: generateProjectName(),
+      operationCompanyName: '上海龙象环保科技股份有限公司',
+      projectTypeName: '道路',
+      projectAddress: `${generateProjectName()}交叉口附近`,
+      devicePoleId: 1000 + i,
+      devicePoleName: `点位${(i + 1).toString().padStart(3, '0')}`,
+      mnCode: generateMnCode(i),
+      longitude: Number(lng.toFixed(6)),
+      latitude: Number(lat.toFixed(6)),
+      cameraStatus: Math.random() > 0.1 ? 1 : 0,
+      dust: Number(dust.toFixed(3)),
+      pm25: Number((dust * 0.3).toFixed(3)),
+      dataTime: `2026-04-24 ${hour}:${minute}:${second}`,
+      status: status,
+      id: i,
+    })
+  }
+  
+  return devices
+}
+
+export const mockDeviceList = generateDeviceList(1500)
 
 export const mockStatistics = {
   total: mockDeviceList.length,
@@ -369,42 +114,101 @@ export const mockStatistics = {
   offline: mockDeviceList.filter(d => d.status === CONFIG.STATUS.OFFLINE).length,
 }
 
+export const getDevicesByStatus = (status) => {
+  if (!status) return mockDeviceList
+  return mockDeviceList.filter(d => d.status === status)
+}
+
+export const getDevicesByDistrict = (districtId) => {
+  if (!districtId) return mockDeviceList
+  return mockDeviceList.filter(d => d.districtId === districtId)
+}
+
+export const searchDevices = (keyword) => {
+  if (!keyword) return mockDeviceList
+  const lowerKeyword = keyword.toLowerCase()
+  return mockDeviceList.filter(d => 
+    d.mnCode.toLowerCase().includes(lowerKeyword) ||
+    d.projectName.toLowerCase().includes(lowerKeyword) ||
+    d.devicePoleName.toLowerCase().includes(lowerKeyword)
+  )
+}
+
 export const generateHourlyDustData = () => {
   const hours = []
   const values = []
   for (let i = 0; i < 24; i++) {
     hours.push(`${i.toString().padStart(2, '0')}:00`)
-    values.push((Math.random() * 0.3 + 0.05).toFixed(3))
+    values.push(Number((Math.random() * 0.3 + 0.05).toFixed(3)))
   }
   return { hours, values }
 }
 
 export const generateDistrictDustData = () => {
-  const districts = ['萧山区', '西湖区', '江干区', '拱墅区', '滨江区', '上城区', '下城区']
-  const values = districts.map(() => (Math.random() * 0.2 + 0.1).toFixed(3))
+  const districts = DISTRICTS.slice(0, 7).map(d => d.name)
+  const values = districts.map(() => Number((Math.random() * 0.2 + 0.1).toFixed(3)))
   return { districts, values }
 }
 
-export const generateDustRankList = (sortType = 'ASC') => {
+export const generateDustRankList = (sortType = 'ASC', limit = 10) => {
   const sortedList = [...mockDeviceList].sort((a, b) => {
     return sortType === 'ASC' ? a.dust - b.dust : b.dust - a.dust
   })
-  return sortedList.slice(0, 10).map((item, index) => ({
+  return sortedList.slice(0, limit).map((item, index) => ({
     rank: index + 1,
     projectName: item.projectName,
     dust: item.dust.toFixed(3),
     districtName: item.districtName,
+    status: item.status,
+    device: item,
   }))
 }
 
 export const generateAreaDustDistribution = () => {
-  return [
-    { name: '萧山区', value: 0.156 },
-    { name: '西湖区', value: 0.189 },
-    { name: '江干区', value: 0.123 },
-    { name: '拱墅区', value: 0.234 },
-    { name: '滨江区', value: 0.112 },
-    { name: '上城区', value: 0.167 },
-    { name: '下城区', value: 0.145 },
-  ]
+  return DISTRICTS.slice(0, 8).map(d => ({
+    name: d.name,
+    value: Number((Math.random() * 0.3 + 0.08).toFixed(3)),
+  }))
+}
+
+export const MAP_DISPLAY_MODES = {
+  MASS_POINT: 'massPoint',
+  CLUSTER: 'cluster',
+  MARKER: 'marker',
+}
+
+export const getMapDisplayModeByZoom = (zoom) => {
+  if (zoom < 11) return MAP_DISPLAY_MODES.MASS_POINT
+  if (zoom < 16) return MAP_DISPLAY_MODES.CLUSTER
+  return MAP_DISPLAY_MODES.MARKER
+}
+
+export const getStatusColor = (status) => {
+  switch (status) {
+    case CONFIG.STATUS.EXCELLENT: return '#28A33E'
+    case CONFIG.STATUS.WARNING: return '#FBAA22'
+    case CONFIG.STATUS.OVER: return '#F92424'
+    case CONFIG.STATUS.OFFLINE: return '#2C2C2C'
+    default: return '#28A33E'
+  }
+}
+
+export const getStatusTextColor = (status) => {
+  switch (status) {
+    case CONFIG.STATUS.EXCELLENT: return 'text-dust-excellent'
+    case CONFIG.STATUS.WARNING: return 'text-dust-warning'
+    case CONFIG.STATUS.OVER: return 'text-dust-over'
+    case CONFIG.STATUS.OFFLINE: return 'text-dust-offline'
+    default: return 'text-dust-excellent'
+  }
+}
+
+export const getStatusBorderColor = (status) => {
+  switch (status) {
+    case CONFIG.STATUS.EXCELLENT: return 'border-dust-excellent'
+    case CONFIG.STATUS.WARNING: return 'border-dust-warning'
+    case CONFIG.STATUS.OVER: return 'border-dust-over'
+    case CONFIG.STATUS.OFFLINE: return 'border-dust-offline'
+    default: return 'border-dust-excellent'
+  }
 }

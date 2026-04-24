@@ -9,15 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^6.20.0",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "axios": "^1.6.0",
+    "clsx": "^2.0.0",
     "echarts": "^5.5.0",
     "echarts-for-react": "^3.0.2",
-    "react-bmapgl": "^0.2.21",
-    "axios": "^1.6.0",
     "lucide-react": "^0.294.0",
-    "clsx": "^2.0.0",
+    "react": "^19.0.0",
+    "react-bmapgl": "^0.2.21",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.20.0",
     "tailwind-merge": "^2.1.0"
   },
   "devDependencies": {
