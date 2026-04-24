@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 220 33% 5%;
+    --foreground: 180 100% 97%;
+    --card: 220 33% 8%;
+    --card-foreground: 180 100% 97%;
+    --popover: 220 33% 8%;
+    --popover-foreground: 180 100% 97%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 33% 5%;
+    --secondary: 220 33% 15%;
+    --secondary-foreground: 180 100% 97%;
+    --muted: 220 33% 15%;
+    --muted-foreground: 180 100% 80%;
+    --accent: 180 100% 30%;
+    --accent-foreground: 180 100% 97%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 180 100% 25%;
+    --input: 220 33% 15%;
+    --ring: 180 100% 50%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    background: linear-gradient(135deg, #0a0f1a 0%, #0d1520 50%, #0a0f1a 100%);
+  }
+}
+
+@layer components {
+  .panel-border {
+    @apply border border-border/30 rounded-lg;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(0, 40, 80, 0.8) 100%);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .panel-title {
+    @apply text-sm font-bold text-primary uppercase tracking-wider;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
+  }
+
+  .status-excellent {
+    @apply bg-dust-excellent text-white;
+  }
+
+  .status-warning {
+    @apply bg-dust-warning text-black;
+  }
+
+  .status-over {
+    @apply bg-dust-over text-white;
+  }
+
+  .status-offline {
+    @apply bg-dust-offline text-white;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  }
+
+  .glow-border {
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3), inset 0 0 5px rgba(0, 212, 255, 0.1);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
