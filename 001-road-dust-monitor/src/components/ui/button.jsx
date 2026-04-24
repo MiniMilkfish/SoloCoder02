@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = {
@@ -28,9 +27,27 @@ const Button = React.forwardRef(({
   asChild = false, 
   ...props 
 }, ref) => {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild && props.children ? React.Fragment : "button"
+  
+  const buttonProps = asChild ? {} : props
+  
+  if (asChild && props.children) {
+    const child = React.Children.only(props.children)
+    return React.cloneElement(child, {
+      ref,
+      className: cn(
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        buttonVariants[variant],
+        buttonSizes[size],
+        className,
+        child.props.className
+      ),
+      ...child.props,
+    })
+  }
+
   return (
-    <Comp
+    <button
       className={cn(
         "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         buttonVariants[variant],
@@ -38,7 +55,7 @@ const Button = React.forwardRef(({
         className
       )}
       ref={ref}
-      {...props}
+      {...buttonProps}
     />
   )
 })
