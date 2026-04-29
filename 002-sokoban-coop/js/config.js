@@ -39,7 +39,7 @@ const CONFIG = {
     GAME_SETTINGS: {
         defaultTimeLimit: 180,
         timerEnabled: false,
-        randomObstacleEnabled: true,
+        randomObstacleEnabled: false,
         randomObstacleInterval: 10000,
         animationDuration: 150,
         localStorageKey: 'sokoban_coop_save'
