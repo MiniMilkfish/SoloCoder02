@@ -1,6 +1,8 @@
 class Game {
     constructor() {
         this.currentLevelId = 1;
+        this.currentDifficulty = null;
+        this.filteredLevelIds = [];
         this.gameState = null;
         this.isGameOver = false;
         this.isPaused = false;
@@ -22,6 +24,11 @@ class Game {
         this.renderer = new Renderer(this);
         this.eventManager = new EventManager(this);
         
+        this.updateFilteredLevels();
+        if (this.filteredLevelIds.length > 0) {
+            this.currentLevelId = this.filteredLevelIds[0];
+        }
+        
         this.loadLevel(this.currentLevelId);
         this.eventManager.bindEvents();
         
@@ -31,6 +38,33 @@ class Game {
         if (savedData) {
             this.showLoadGameConfirm(savedData);
         }
+    }
+
+    updateFilteredLevels() {
+        if (this.currentDifficulty === null) {
+            this.filteredLevelIds = LEVELS.map(level => level.id);
+        } else {
+            this.filteredLevelIds = LEVELS
+                .filter(level => level.difficulty === this.currentDifficulty)
+                .map(level => level.id);
+        }
+    }
+
+    setDifficulty(difficulty) {
+        this.currentDifficulty = difficulty;
+        this.updateFilteredLevels();
+        
+        if (this.filteredLevelIds.length > 0) {
+            this.currentLevelId = this.filteredLevelIds[0];
+            this.loadLevel(this.currentLevelId);
+        }
+        
+        this.renderer.updateUI();
+        this.renderer.updateDifficultyButtons();
+    }
+
+    getCurrentLevelIndex() {
+        return this.filteredLevelIds.indexOf(this.currentLevelId);
     }
 
     loadLevel(levelId) {
@@ -75,14 +109,18 @@ class Game {
 
     restartGame() {
         Utils.clearLocalStorage();
-        this.currentLevelId = 1;
-        this.loadLevel(1);
+        this.updateFilteredLevels();
+        if (this.filteredLevelIds.length > 0) {
+            this.currentLevelId = this.filteredLevelIds[0];
+            this.loadLevel(this.currentLevelId);
+        }
         this.showMessage('游戏已全局重启', 'info', 1500);
     }
 
     nextLevel() {
-        if (this.currentLevelId < LEVEL_UTILS.getLevelCount()) {
-            this.currentLevelId++;
+        const currentIndex = this.getCurrentLevelIndex();
+        if (currentIndex < this.filteredLevelIds.length - 1) {
+            this.currentLevelId = this.filteredLevelIds[currentIndex + 1];
             this.loadLevel(this.currentLevelId);
             this.saveProgress();
         } else {
@@ -91,8 +129,9 @@ class Game {
     }
 
     prevLevel() {
-        if (this.currentLevelId > 1) {
-            this.currentLevelId--;
+        const currentIndex = this.getCurrentLevelIndex();
+        if (currentIndex > 0) {
+            this.currentLevelId = this.filteredLevelIds[currentIndex - 1];
             this.loadLevel(this.currentLevelId);
             this.saveProgress();
         }
@@ -175,12 +214,15 @@ class Game {
         
         this.saveProgress();
         
+        const currentIndex = this.getCurrentLevelIndex();
+        const isLastLevel = currentIndex >= this.filteredLevelIds.length - 1;
+        
         this.renderer.showModal(
             '关卡完成！',
             `恭喜完成第 ${this.currentLevelId} 关！\n总步数: ${this.totalSteps}\n用时: ${Utils.formatTime(this.elapsedTime)}`,
             'success',
             () => {
-                if (this.currentLevelId < LEVEL_UTILS.getLevelCount()) {
+                if (!isLastLevel) {
                     this.nextLevel();
                 } else {
                     this.showMessage('恭喜通关所有关卡！', 'success', 5000);
@@ -323,6 +365,7 @@ class Game {
     saveProgress() {
         const saveData = {
             currentLevelId: this.currentLevelId,
+            currentDifficulty: this.currentDifficulty,
             totalSteps: this.totalSteps,
             elapsedTime: this.elapsedTime,
             timestamp: Date.now()
@@ -332,6 +375,10 @@ class Game {
 
     loadProgress(savedData) {
         if (savedData && savedData.currentLevelId) {
+            if (savedData.currentDifficulty !== undefined) {
+                this.currentDifficulty = savedData.currentDifficulty;
+                this.updateFilteredLevels();
+            }
             this.currentLevelId = savedData.currentLevelId;
             this.loadLevel(this.currentLevelId);
             this.showMessage('已加载存档', 'info', 1500);
@@ -440,8 +487,17 @@ class Renderer {
     updateUI() {
         const { player1, player2 } = this.game.gameState;
         
-        document.getElementById('current-level').textContent = this.game.currentLevelId;
-        document.getElementById('total-levels').textContent = LEVEL_UTILS.getLevelCount();
+        const currentIndex = this.game.getCurrentLevelIndex();
+        document.getElementById('current-level').textContent = currentIndex + 1;
+        document.getElementById('total-levels').textContent = this.game.filteredLevelIds.length;
+        
+        const difficultyDisplay = document.getElementById('current-difficulty');
+        if (this.game.currentDifficulty === null) {
+            difficultyDisplay.textContent = '全部';
+        } else {
+            difficultyDisplay.textContent = LEVEL_UTILS.getDifficultyName(this.game.currentDifficulty);
+        }
+        
         document.getElementById('step-count').textContent = this.game.totalSteps;
         document.getElementById('time-display').textContent = Utils.formatTime(this.game.elapsedTime);
         
@@ -487,6 +543,29 @@ class Renderer {
             btn.textContent = '关闭随机障碍';
         } else {
             btn.textContent = '开启随机障碍';
+        }
+    }
+
+    updateDifficultyButtons() {
+        const buttons = {
+            all: document.getElementById('btn-diff-all'),
+            easy: document.getElementById('btn-diff-easy'),
+            medium: document.getElementById('btn-diff-medium'),
+            hard: document.getElementById('btn-diff-hard')
+        };
+
+        Object.values(buttons).forEach(btn => {
+            if (btn) btn.classList.remove('btn-diff-active');
+        });
+
+        if (this.game.currentDifficulty === null && buttons.all) {
+            buttons.all.classList.add('btn-diff-active');
+        } else if (this.game.currentDifficulty === DIFFICULTY.EASY && buttons.easy) {
+            buttons.easy.classList.add('btn-diff-active');
+        } else if (this.game.currentDifficulty === DIFFICULTY.MEDIUM && buttons.medium) {
+            buttons.medium.classList.add('btn-diff-active');
+        } else if (this.game.currentDifficulty === DIFFICULTY.HARD && buttons.hard) {
+            buttons.hard.classList.add('btn-diff-active');
         }
     }
 
@@ -578,6 +657,22 @@ class EventManager {
 
         document.getElementById('btn-random-toggle').addEventListener('click', () => {
             this.game.toggleRandomObstacles();
+        });
+
+        document.getElementById('btn-diff-all').addEventListener('click', () => {
+            this.game.setDifficulty(null);
+        });
+
+        document.getElementById('btn-diff-easy').addEventListener('click', () => {
+            this.game.setDifficulty(DIFFICULTY.EASY);
+        });
+
+        document.getElementById('btn-diff-medium').addEventListener('click', () => {
+            this.game.setDifficulty(DIFFICULTY.MEDIUM);
+        });
+
+        document.getElementById('btn-diff-hard').addEventListener('click', () => {
+            this.game.setDifficulty(DIFFICULTY.HARD);
         });
     }
 

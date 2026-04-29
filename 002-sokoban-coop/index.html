@@ -15,7 +15,11 @@
                     <span class="label">关卡:</span>
                     <span id="current-level">1</span>
                     <span class="label">/</span>
-                    <span id="total-levels">5</span>
+                    <span id="total-levels">50</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">难度:</span>
+                    <span id="current-difficulty">全部</span>
                 </div>
                 <div class="info-item">
                     <span class="label">步数:</span>
@@ -64,13 +68,20 @@
         </main>
 
         <footer class="game-footer">
+            <div class="difficulty-selector">
+                <span class="label">难度筛选:</span>
+                <button id="btn-diff-all" class="btn btn-diff btn-diff-active">全部</button>
+                <button id="btn-diff-easy" class="btn btn-diff">简单</button>
+                <button id="btn-diff-medium" class="btn btn-diff">中等</button>
+                <button id="btn-diff-hard" class="btn btn-diff">困难</button>
+            </div>
             <div class="game-controls">
                 <button id="btn-reset" class="btn btn-secondary">重置关卡</button>
                 <button id="btn-restart" class="btn btn-secondary">全局重启</button>
                 <button id="btn-prev" class="btn btn-nav">上一关</button>
                 <button id="btn-next" class="btn btn-nav">下一关</button>
                 <button id="btn-timer-toggle" class="btn btn-warning">开启限时模式</button>
-                <button id="btn-random-toggle" class="btn btn-warning">关闭随机障碍</button>
+                <button id="btn-random-toggle" class="btn btn-warning">开启随机障碍</button>
             </div>
             <div class="legend">
                 <div class="legend-item">

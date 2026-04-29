@@ -474,6 +474,46 @@ body {
     font-size: 0.8rem;
 }
 
+.difficulty-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.difficulty-selector .label {
+    color: #aaa;
+    font-size: 1rem;
+}
+
+.btn-diff {
+    padding: 8px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: #aaa;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-diff:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.btn-diff-active {
+    background: linear-gradient(145deg, #e94560, #c73e54);
+    color: white;
+    border-color: #e94560;
+}
+
+.btn-diff-active:hover {
+    background: linear-gradient(145deg, #e94560, #c73e54);
+}
+
 .modal {
     display: none;
     position: fixed;
