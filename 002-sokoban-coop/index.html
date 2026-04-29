@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双人协作推箱子 - Sokoban Co-op</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>双人协作推箱子</h1>
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="label">关卡:</span>
+                    <span id="current-level">1</span>
+                    <span class="label">/</span>
+                    <span id="total-levels">5</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">步数:</span>
+                    <span id="step-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">时间:</span>
+                    <span id="time-display">00:00</span>
+                </div>
+                <div class="info-item" id="timer-info" style="display:none">
+                    <span class="label">限时:</span>
+                    <span id="time-limit">--</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="player-panel player1-panel">
+                <h3>玩家 1</h3>
+                <div class="controls">
+                    <p><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> 移动</p>
+                    <p><kbd>Q</kbd> 推箱子</p>
+                </div>
+                <div class="player-stats">
+                    <span class="label">步数:</span>
+                    <span id="player1-steps">0</span>
+                </div>
+            </div>
+
+            <div class="game-board-container">
+                <div id="game-board"></div>
+                <div id="game-message" class="game-message"></div>
+            </div>
+
+            <div class="player-panel player2-panel">
+                <h3>玩家 2</h3>
+                <div class="controls">
+                    <p><kbd>I</kbd> <kbd>J</kbd> <kbd>K</kbd> <kbd>L</kbd> 移动</p>
+                    <p><kbd>U</kbd> 推箱子</p>
+                </div>
+                <div class="player-stats">
+                    <span class="label">步数:</span>
+                    <span id="player2-steps">0</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <div class="game-controls">
+                <button id="btn-reset" class="btn btn-secondary">重置关卡</button>
+                <button id="btn-restart" class="btn btn-secondary">全局重启</button>
+                <button id="btn-prev" class="btn btn-nav">上一关</button>
+                <button id="btn-next" class="btn btn-nav">下一关</button>
+                <button id="btn-timer-toggle" class="btn btn-warning">开启限时模式</button>
+                <button id="btn-random-toggle" class="btn btn-warning">关闭随机障碍</button>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="tile wall"></div>
+                    <span>墙体</span>
+                </div>
+                <div class="legend-item">
+                    <div class="tile floor"></div>
+                    <span>空地</span>
+                </div>
+                <div class="legend-item">
+                    <div class="tile target"></div>
+                    <span>目标点</span>
+                </div>
+                <div class="legend-item">
+                    <div class="tile box"></div>
+                    <span>箱子</span>
+                </div>
+                <div class="legend-item">
+                    <div class="tile box-on-target"></div>
+                    <span>已完成</span>
+                </div>
+                <div class="legend-item">
+                    <div class="tile player1"></div>
+                    <span>玩家1</span>
+                </div>
+                <div class="legend-item">
+                    <div class="tile player2"></div>
+                    <span>玩家2</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="modal-btn-ok" class="btn btn-primary">确定</button>
+                <button id="modal-btn-cancel" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
