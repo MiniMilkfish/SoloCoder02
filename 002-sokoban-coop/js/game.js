@@ -57,9 +57,7 @@ class Game {
         this.stopTimer();
         this.stopRandomObstacles();
 
-        if (this.timerEnabled) {
-            this.startTimer();
-        }
+        this.startTimer();
 
         if (this.randomObstacleEnabled) {
             this.startRandomObstacles();
@@ -218,6 +216,20 @@ class Game {
         }, 1000);
     }
 
+    togglePause() {
+        this.isPaused = !this.isPaused;
+        
+        if (this.isPaused) {
+            this.stopTimer();
+            this.showMessage('游戏已暂停', 'info', 2000);
+        } else {
+            if (!this.isGameOver) {
+                this.startTimer();
+            }
+            this.hideMessage();
+        }
+    }
+
     stopTimer() {
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
@@ -358,20 +370,6 @@ class Game {
     hideMessage() {
         this.renderer.hideMessage();
     }
-
-    togglePause() {
-        this.isPaused = !this.isPaused;
-        
-        if (this.isPaused) {
-            this.stopTimer();
-            this.showMessage('游戏已暂停', 'info', 2000);
-        } else {
-            if (this.timerEnabled && !this.isGameOver) {
-                this.startTimer();
-            }
-            this.hideMessage();
-        }
-    }
 }
 
 class Renderer {
@@ -428,6 +426,8 @@ class Renderer {
                     tile.classList.add(CONFIG.CLASSES.wall);
                 } else if (tileType === 'random-obstacle') {
                     tile.classList.add(CONFIG.CLASSES.randomObstacle);
+                } else if (tileType === 'outside') {
+                    tile.classList.add('outside');
                 } else {
                     tile.classList.add(CONFIG.CLASSES.floor);
                 }
